@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AmpalOne — LinkedIn Company Page</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --li-bg:      #f3f2ef;
+  --li-white:   #ffffff;
+  --li-blue:    #0a66c2;
+  --li-blue-h:  #004182;
+  --li-text:    #191919;
+  --li-muted:   #666666;
+  --li-border:  #e0e0e0;
+  --li-hover:   #f5f5f5;
+  --li-green:   #057642;
+  --li-pill-bg: #e8f3ff;
+  --li-pill-c:  #0a66c2;
+  --font:       'Sora', sans-serif;
+  --mono:       'IBM Plex Mono', monospace;
+  --radius:     8px;
+  --shadow:     0 0 0 1px rgba(0,0,0,.08), 0 2px 8px rgba(0,0,0,.06);
+}
+
+body {
+  background: var(--li-bg);
+  color: var(--li-text);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+a { color: var(--li-blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Top Nav ── */
+.topnav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--li-white);
+  border-bottom: 1px solid var(--li-border);
+  display: flex; align-items: center;
+  padding: 0 24px; height: 52px; gap: 16px;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 700; font-size: 20px; color: var(--li-blue); flex-shrink: 0;
+}
+.nav-logo svg { width: 34px; height: 34px; }
+.nav-search {
+  flex: 1; max-width: 280px;
+  background: #eef3f8; border: 1px solid #dce6f0;
+  border-radius: 4px; padding: 7px 12px; font-size: 14px;
+  font-family: var(--font); color: var(--li-text); outline: none;
+}
+.nav-search:focus { border-color: var(--li-blue); background: #fff; }
+.nav-links { display: flex; gap: 4px; margin-left: auto; }
+.nav-link {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 6px 12px; border-radius: 4px; cursor: pointer;
+  font-size: 11px; color: var(--li-muted); gap: 2px;
+  transition: color 0.15s, background 0.15s;
+}
+.nav-link:hover { color: var(--li-text); background: var(--li-hover); }
+.nav-link svg { width: 20px; height: 20px; }
+.nav-btn {
+  padding: 6px 16px; border: 1.5px solid var(--li-blue);
+  border-radius: 20px; color: var(--li-blue); font-weight: 600;
+  font-size: 13px; cursor: pointer; background: none;
+  font-family: var(--font); transition: all 0.15s;
+}
+.nav-btn:hover { background: var(--li-pill-bg); }
+.nav-btn.filled { background: var(--li-blue); color: #fff; margin-left: 4px; }
+.nav-btn.filled:hover { background: var(--li-blue-h); }
+
+/* ── Layout ── */
+.page { max-width: 1128px; margin: 0 auto; padding: 20px 16px; display: grid; grid-template-columns: 1fr 300px; gap: 20px; }
+
+/* ── Cover + Identity Card ── */
+.profile-card {
+  background: var(--li-white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.cover-img {
+  width: 100%; height: 160px;
+  background: linear-gradient(135deg, #0a1628 0%, #0a3060 40%, #0a66c2 100%);
+  position: relative; overflow: hidden;
+}
+.cover-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.cover-tagline {
+  position: absolute; bottom: 18px; right: 24px;
+  font-size: 11px; font-family: var(--mono); color: rgba(255,255,255,.5);
+  letter-spacing: 2px; text-transform: uppercase;
+}
+
+.profile-body { padding: 0 24px 20px; position: relative; }
+.profile-logo {
+  width: 80px; height: 80px; border-radius: 12px;
+  border: 3px solid var(--li-white);
+  background: #0a1628;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; font-weight: 700; color: #4f9eff;
+  font-family: var(--mono);
+  margin-top: -40px; margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+.profile-name { font-size: 22px; font-weight: 700; letter-spacing: -0.4px; }
+.profile-tag  { font-size: 14px; color: var(--li-muted); margin-top: 2px; }
+.profile-meta {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  margin-top: 10px; font-size: 13px; color: var(--li-muted);
+  align-items: center;
+}
+.profile-meta span { display: flex; align-items: center; gap: 5px; }
+.profile-meta .followers { color: var(--li-blue); font-weight: 500; cursor: pointer; }
+.profile-meta .followers:hover { text-decoration: underline; }
+.profile-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+.btn-follow {
+  padding: 7px 22px; background: var(--li-blue); color: #fff;
+  border: none; border-radius: 20px; font-weight: 600; font-size: 14px;
+  cursor: pointer; font-family: var(--font); transition: background 0.15s;
+  display: flex; align-items: center; gap: 6px;
+}
+.btn-follow:hover { background: var(--li-blue-h); }
+.btn-follow.following { background: #fff; color: var(--li-blue); border: 1.5px solid var(--li-blue); }
+.btn-follow.following:hover { background: var(--li-pill-bg); }
+.btn-visit {
+  padding: 7px 22px; background: #fff; color: var(--li-text);
+  border: 1.5px solid var(--li-border); border-radius: 20px;
+  font-weight: 600; font-size: 14px; cursor: pointer; font-family: var(--font);
+  transition: all 0.15s;
+}
+.btn-visit:hover { border-color: #999; background: var(--li-hover); }
+
+/* ── Tabs ── */
+.tabs {
+  display: flex; border-bottom: 1px solid var(--li-border);
+  padding: 0 24px; margin-top: 8px; gap: 4px;
+}
+.tab {
+  padding: 12px 16px; font-size: 14px; font-weight: 500;
+  color: var(--li-muted); cursor: pointer; border-bottom: 2px solid transparent;
+  margin-bottom: -1px; transition: all 0.15s; white-space: nowrap;
+}
+.tab:hover { color: var(--li-text); background: var(--li-hover); border-radius: 4px 4px 0 0; }
+.tab.active { color: var(--li-text); border-bottom-color: var(--li-text); }
+
+/* ── Section Cards ── */
+.section-card {
+  background: var(--li-white); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 24px; margin-bottom: 12px;
+}
+.section-title {
+  font-size: 18px; font-weight: 700; margin-bottom: 16px;
+  letter-spacing: -0.3px;
+}
+.section-body { font-size: 14px; color: #333; line-height: 1.7; }
+.section-body p + p { margin-top: 10px; }
+
+/* ── Metrics Strip ── */
+.metrics-row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--li-border);
+  border: 1px solid var(--li-border); border-radius: var(--radius);
+  overflow: hidden; margin-bottom: 12px;
+}
+.metric-cell {
+  background: var(--li-white); padding: 20px 16px; text-align: center;
+}
+.metric-num { font-size: 26px; font-weight: 700; color: var(--li-blue); letter-spacing: -1px; font-family: var(--mono); }
+.metric-lbl { font-size: 12px; color: var(--li-muted); margin-top: 3px; }
+
+/* ── Products ── */
+.product-list { display: flex; flex-direction: column; gap: 16px; }
+.product-item {
+  display: flex; gap: 16px; padding: 16px;
+  border: 1px solid var(--li-border); border-radius: var(--radius);
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+.product-item:hover { box-shadow: 0 2px 12px rgba(0,0,0,.1); border-color: #bbb; }
+.product-icon {
+  width: 48px; height: 48px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 700; color: #fff;
+  font-family: var(--mono); flex-shrink: 0;
+}
+.pi-1 { background: linear-gradient(135deg, #0a3060, #0a66c2); }
+.pi-2 { background: linear-gradient(135deg, #064e3b, #059669); }
+.pi-3 { background: linear-gradient(135deg, #3b0764, #7c3aed); }
+.product-content { flex: 1; }
+.product-name { font-size: 15px; font-weight: 600; }
+.product-sub  { font-size: 13px; color: var(--li-blue); margin-top: 1px; }
+.product-desc { font-size: 13px; color: #444; margin-top: 6px; line-height: 1.5; }
+.product-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.ptag {
+  font-size: 11.5px; padding: 3px 10px; border-radius: 20px;
+  background: var(--li-pill-bg); color: var(--li-pill-c); font-weight: 500;
+}
+
+/* ── Specialties ── */
+.spec-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.spec-pill {
+  padding: 5px 14px; border-radius: 20px;
+  border: 1px solid var(--li-border); font-size: 13px; color: var(--li-text);
+  background: var(--li-hover); transition: all 0.15s; cursor: default;
+}
+.spec-pill:hover { border-color: var(--li-blue); color: var(--li-blue); background: var(--li-pill-bg); }
+
+/* ── Updates / Posts ── */
+.post-item {
+  padding: 16px 0; border-bottom: 1px solid var(--li-border);
+}
+.post-item:last-child { border-bottom: none; padding-bottom: 0; }
+.post-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.post-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: #0a1628; display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: #4f9eff; font-family: var(--mono); flex-shrink: 0;
+}
+.post-who { font-size: 14px; font-weight: 600; }
+.post-time { font-size: 12px; color: var(--li-muted); }
+.post-body { font-size: 14px; color: #333; line-height: 1.6; }
+.post-tag {
+  display: inline-block; margin-top: 8px; font-size: 12px;
+  color: var(--li-blue); font-weight: 500;
+}
+.post-actions { display: flex; gap: 20px; margin-top: 12px; }
+.post-action {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 13px; color: var(--li-muted); cursor: pointer;
+  padding: 4px 8px; border-radius: 4px; transition: all 0.15s;
+}
+.post-action:hover { color: var(--li-blue); background: var(--li-pill-bg); }
+.post-action svg { width: 16px; height: 16px; }
+
+/* ── Sidebar Cards ── */
+.sidebar-card {
+  background: var(--li-white); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 20px; margin-bottom: 12px;
+}
+.sidebar-title { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+.info-row { display: flex; flex-direction: column; gap: 10px; }
+.info-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; }
+.info-icon { color: var(--li-muted); margin-top: 1px; flex-shrink: 0; }
+.info-label { font-weight: 600; font-size: 12px; color: var(--li-muted); }
+.info-val { color: var(--li-text); }
+.info-val a { color: var(--li-blue); }
+
+.people-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
+.people-card {
+  padding: 12px 10px; border: 1px solid var(--li-border); border-radius: 6px;
+  text-align: center; transition: all 0.15s;
+}
+.people-card:hover { border-color: var(--li-blue); background: var(--li-pill-bg); }
+.pcard-av {
+  width: 44px; height: 44px; border-radius: 50%; margin: 0 auto 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; color: #fff;
+}
+.pcard-name { font-size: 12px; font-weight: 600; }
+.pcard-role { font-size: 11px; color: var(--li-muted); margin-top: 1px; }
+.pcard-btn {
+  margin-top: 8px; width: 100%; padding: 4px 0;
+  border: 1px solid var(--li-blue); border-radius: 12px;
+  color: var(--li-blue); font-size: 12px; font-weight: 600;
+  background: none; cursor: pointer; font-family: var(--font);
+  transition: all 0.15s;
+}
+.pcard-btn:hover { background: var(--li-pill-bg); }
+
+.similar-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 0; border-bottom: 1px solid var(--li-border);
+}
+.similar-item:last-child { border-bottom: none; }
+.similar-logo {
+  width: 40px; height: 40px; border-radius: 6px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: #fff; font-family: var(--mono);
+}
+.similar-name { font-size: 13px; font-weight: 600; }
+.similar-tag  { font-size: 12px; color: var(--li-muted); }
+.follow-small {
+  margin-left: auto; padding: 4px 12px; border: 1px solid var(--li-blue);
+  border-radius: 12px; color: var(--li-blue); font-size: 12px; font-weight: 600;
+  background: none; cursor: pointer; font-family: var(--font); flex-shrink: 0;
+  transition: all 0.15s;
+}
+.follow-small:hover { background: var(--li-pill-bg); }
+
+/* ── Footer ── */
+.li-footer {
+  max-width: 1128px; margin: 8px auto 32px; padding: 0 16px;
+  display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 12px; color: var(--li-muted);
+}
+.li-footer a { color: var(--li-muted); }
+.li-footer a:hover { color: var(--li-blue); text-decoration: underline; }
+.li-footer-logo { width: 100%; display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--li-blue); margin-bottom: 4px; }
+
+/* ── Animations ── */
+.fade-in { animation: fadeIn 0.4s ease both; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in:nth-child(2) { animation-delay: 0.05s; }
+.fade-in:nth-child(3) { animation-delay: 0.10s; }
+.fade-in:nth-child(4) { animation-delay: 0.15s; }
+.fade-in:nth-child(5) { animation-delay: 0.20s; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .page { grid-template-columns: 1fr; }
+  .sidebar-col { display: none; }
+  .metrics-row { grid-template-columns: 1fr 1fr; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Top Navigation -->
+<nav class="topnav">
+  <div class="nav-logo">
+    <svg viewBox="0 0 34 34" fill="none">
+      <rect width="34" height="34" rx="4" fill="#0a66c2"/>
+      <text x="5" y="26" font-family="serif" font-size="22" font-weight="bold" fill="white">in</text>
+    </svg>
+    LinkedIn
+  </div>
+  <input class="nav-search" type="text" placeholder="Search"/>
+  <div class="nav-links">
+    <div class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M3 12l9-9 9 9M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9"/>
+      </svg>
+      Home
+    </div>
+    <div class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/>
+      </svg>
+      Explore
+    </div>
+    <div class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+      </svg>
+      Network
+    </div>
+    <div class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
+      </svg>
+      Jobs
+    </div>
+    <div class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+      </svg>
+      Messaging
+    </div>
+  </div>
+  <button class="nav-btn" style="margin-left:8px">Sign in</button>
+  <button class="nav-btn filled">Join now</button>
+</nav>
+
+<!-- Page Content -->
+<div class="page">
+
+  <!-- Main Column -->
+  <main>
+
+    <!-- Profile Identity Card -->
+    <div class="profile-card fade-in">
+      <div class="cover-img">
+        <div class="cover-grid"></div>
+        <div class="cover-tagline">AI · Security · Enterprise</div>
+      </div>
+      <div class="profile-body">
+        <div class="profile-logo">A1</div>
+        <div class="profile-name">AmpalOne</div>
+        <div class="profile-tag">AI-Native Enterprise Security — Browser · Endpoint · DSPM</div>
+        <div class="profile-meta">
+          <span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+            Global · Remote-First
+          </span>
+          <span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
+            </svg>
+            Computer &amp; Network Security
+          </span>
+          <span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+            </svg>
+            1–10 employees
+          </span>
+          <span class="followers" onclick="this.textContent='2,849 followers'">2,847 followers</span>
+          <span>
+            <a href="https://www.ampalone.com" target="_blank">www.ampalone.com</a>
+          </span>
+        </div>
+        <div class="profile-actions">
+          <button class="btn-follow" id="follow-btn" onclick="toggleFollow()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+            Follow
+          </button>
+          <button class="btn-visit" onclick="window.open('https://www.ampalone.com','_blank')">Visit website</button>
+          <button class="btn-visit">Contact</button>
+          <button class="btn-visit" style="padding:7px 14px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle">
+              <circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab(this,'home')">Home</div>
+        <div class="tab" onclick="switchTab(this,'about')">About</div>
+        <div class="tab" onclick="switchTab(this,'posts')">Posts</div>
+        <div class="tab" onclick="switchTab(this,'jobs')">Jobs</div>
+        <div class="tab" onclick="switchTab(this,'people')">People</div>
+      </div>
+    </div>
+
+    <!-- Tab Content: HOME -->
+    <div id="tab-home">
+
+      <!-- Metrics -->
+      <div class="metrics-row fade-in">
+        <div class="metric-cell">
+          <div class="metric-num">90%</div>
+          <div class="metric-lbl">Fewer false positives</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-num">6 min</div>
+          <div class="metric-lbl">Average deployment</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-num">100%</div>
+          <div class="metric-lbl">Data inside perimeter</div>
+        </div>
+      </div>
+
+      <!-- About snippet -->
+      <div class="section-card fade-in">
+        <div class="section-title">About</div>
+        <div class="section-body">
+          <p>AmpalOne is an AI-native enterprise security company delivering a unified suite of next-generation products that protect organisations at every layer — from the browser to the endpoint to the data layer.</p>
+          <p>Built for 2026 and beyond, AmpalOne replaces legacy security tools with AI-first solutions that deploy in minutes, generate near-zero false positives, and keep all data strictly inside your perimeter.</p>
+        </div>
+        <div style="margin-top:14px">
+          <a href="#" style="font-size:13px;font-weight:600" onclick="switchTabByName('about');return false">Show more →</a>
+        </div>
+      </div>
+
+      <!-- Products -->
+      <div class="section-card fade-in">
+        <div class="section-title">Products</div>
+        <div class="product-list">
+
+          <div class="product-item">
+            <div class="product-icon pi-1">Nx</div>
+            <div class="product-content">
+              <div class="product-name">AmpalOne Netrix</div>
+              <div class="product-sub">Enterprise Secure Browser</div>
+              <div class="product-desc">Hardened AI-native enterprise browser securing data at the point of interaction. Chrome-level speed with enterprise-grade protection, real-time DLP, and Zero Trust device posture.</div>
+              <div class="product-tags">
+                <span class="ptag">DLP</span>
+                <span class="ptag">Zero Trust</span>
+                <span class="ptag">GenAI Governance</span>
+                <span class="ptag">SIEM Export</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-item">
+            <div class="product-icon pi-2">Ob</div>
+            <div class="product-content">
+              <div class="product-name">AmpalOne Orbit</div>
+              <div class="product-sub">Digital Employee Experience</div>
+              <div class="product-desc">Ultra-lightweight invisible endpoint engine with real-time telemetry streaming and autonomous self-healing. Near-zero CPU overhead. Extends hardware lifecycle by 12–18 months.</div>
+              <div class="product-tags">
+                <span class="ptag">Endpoint</span>
+                <span class="ptag">ZTNA</span>
+                <span class="ptag">Self-Healing</span>
+                <span class="ptag">Telemetry</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-item">
+            <div class="product-icon pi-3">Dx</div>
+            <div class="product-content">
+              <div class="product-name">AmpalOne DocXsyn</div>
+              <div class="product-sub">AI-Powered DSPM</div>
+              <div class="product-desc">AI-native Data Security Posture Management using localised LLMs via Ollama. Fully air-gapped. 90% fewer false positives vs. legacy RegEx tools. Deploy in hours, not months.</div>
+              <div class="product-tags">
+                <span class="ptag">DSPM</span>
+                <span class="ptag">Local LLM</span>
+                <span class="ptag">Air-Gapped</span>
+                <span class="ptag">Multi-Cloud</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Recent Post -->
+      <div class="section-card fade-in">
+        <div class="section-title">Recent updates</div>
+        <div class="post-item">
+          <div class="post-meta">
+            <div class="post-avatar">A1</div>
+            <div>
+              <div class="post-who">AmpalOne</div>
+              <div class="post-time">2 days ago · <span style="color:var(--li-blue)">🌐 Public</span></div>
+            </div>
+          </div>
+          <div class="post-body">
+            Legacy security tools were designed for a world that no longer exists. They're slow to deploy, noisy with false positives, and leave your data exposed.<br><br>
+            AmpalOne Netrix deploys in <strong>6 minutes</strong>. Your data never leaves your perimeter. Zero Trust, out of the box.<br><br>
+            Ready to see it live? Book a demo — link in bio.
+          </div>
+          <span class="post-tag">#EnterpriseSecurity #ZeroTrust #AI #DSPM</span>
+          <div class="post-actions">
+            <div class="post-action" onclick="likePost(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.3a2 2 0 002-1.7l1.4-9a2 2 0 00-2-2.3H14z"/><path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/></svg>
+              <span>Like</span>
+            </div>
+            <div class="post-action">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+              Comment
+            </div>
+            <div class="post-action">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+              Repost
+            </div>
+            <div class="post-action">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              Send
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tab-home -->
+
+    <!-- Tab Content: ABOUT (hidden by default) -->
+    <div id="tab-about" style="display:none">
+      <div class="section-card fade-in">
+        <div class="section-title">Overview</div>
+        <div class="section-body">
+          <p>AmpalOne is an AI-native enterprise security company delivering a unified suite of next-generation products that protect organisations at every layer — from the browser to the endpoint to the data layer.</p>
+          <p>Built for 2026 and beyond, AmpalOne replaces legacy security tools with AI-first solutions that deploy in minutes, generate near-zero false positives, and keep all data strictly inside your perimeter.</p>
+          <p>Our philosophy: every enterprise deserves security that is simple, transparent, and genuinely effective — without vendor lock-in or hidden complexity.</p>
+        </div>
+      </div>
+      <div class="section-card fade-in">
+        <div class="section-title">Company info</div>
+        <div class="info-row">
+          <div class="info-item">
+            <svg class="info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div><div class="info-label">Headquarters</div><div class="info-val">Global · Remote-First</div></div>
+          </div>
+          <div class="info-item">
+            <svg class="info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+            <div><div class="info-label">Industry</div><div class="info-val">Computer &amp; Network Security · AI</div></div>
+          </div>
+          <div class="info-item">
+            <svg class="info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <div><div class="info-label">Founded</div><div class="info-val">2025</div></div>
+          </div>
+          <div class="info-item">
+            <svg class="info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            <div><div class="info-label">Company size</div><div class="info-val">1–10 employees</div></div>
+          </div>
+          <div class="info-item">
+            <svg class="info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+            <div><div class="info-label">Website</div><div class="info-val"><a href="https://www.ampalone.com" target="_blank">www.ampalone.com</a></div></div>
+          </div>
+          <div class="info-item">
+            <svg class="info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <div><div class="info-label">Email</div><div class="info-val"><a href="mailto:knowhow@ampalone.com">knowhow@ampalone.com</a></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="section-card fade-in">
+        <div class="section-title">Specialties</div>
+        <div class="spec-grid">
+          <span class="spec-pill">Enterprise Security</span>
+          <span class="spec-pill">AI-Native Security</span>
+          <span class="spec-pill">Zero Trust</span>
+          <span class="spec-pill">DLP</span>
+          <span class="spec-pill">DSPM</span>
+          <span class="spec-pill">Secure Browser</span>
+          <span class="spec-pill">Digital Employee Experience</span>
+          <span class="spec-pill">Endpoint Security</span>
+          <span class="spec-pill">Data Classification</span>
+          <span class="spec-pill">GenAI Governance</span>
+          <span class="spec-pill">Multi-Cloud Security</span>
+          <span class="spec-pill">ZTNA</span>
+          <span class="spec-pill">SIEM Integration</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Content: POSTS -->
+    <div id="tab-posts" style="display:none">
+      <div class="section-card fade-in">
+        <div class="section-title">Posts</div>
+
+        <div class="post-item">
+          <div class="post-meta">
+            <div class="post-avatar">A1</div>
+            <div>
+              <div class="post-who">AmpalOne</div>
+              <div class="post-time">2 days ago</div>
+            </div>
+          </div>
+          <div class="post-body">Legacy security tools were designed for a world that no longer exists. AmpalOne Netrix deploys in <strong>6 minutes</strong>. Your data never leaves your perimeter. Book a demo today.</div>
+          <span class="post-tag">#EnterpriseSecurity #ZeroTrust #AI</span>
+          <div class="post-actions">
+            <div class="post-action" onclick="likePost(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.3a2 2 0 002-1.7l1.4-9a2 2 0 00-2-2.3H14z"/><path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/></svg> Like</div>
+            <div class="post-action">Comment</div>
+            <div class="post-action">Repost</div>
+          </div>
+        </div>
+
+        <div class="post-item">
+          <div class="post-meta">
+            <div class="post-avatar">A1</div>
+            <div>
+              <div class="post-who">AmpalOne</div>
+              <div class="post-time">1 week ago</div>
+            </div>
+          </div>
+          <div class="post-body">Introducing <strong>AmpalOne DocXsyn</strong> — AI-powered DSPM that classifies your sensitive data using a fully local LLM. Zero data leaves your perimeter. 90% fewer false positives. Agentless. Multi-cloud.</div>
+          <span class="post-tag">#DSPM #DataSecurity #LocalAI #Ollama</span>
+          <div class="post-actions">
+            <div class="post-action" onclick="likePost(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.3a2 2 0 002-1.7l1.4-9a2 2 0 00-2-2.3H14z"/><path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/></svg> Like</div>
+            <div class="post-action">Comment</div>
+            <div class="post-action">Repost</div>
+          </div>
+        </div>
+
+        <div class="post-item">
+          <div class="post-meta">
+            <div class="post-avatar">A1</div>
+            <div>
+              <div class="post-who">AmpalOne</div>
+              <div class="post-time">2 weeks ago</div>
+            </div>
+          </div>
+          <div class="post-body"><strong>AmpalOne Orbit</strong> extends your hardware lifecycle by 12–18 months while streaming real-time endpoint telemetry. Near-zero CPU overhead. Autonomous self-healing. Your IT team will thank you.</div>
+          <span class="post-tag">#DigitalEmployeeExperience #Endpoint #ITOps</span>
+          <div class="post-actions">
+            <div class="post-action" onclick="likePost(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.3a2 2 0 002-1.7l1.4-9a2 2 0 00-2-2.3H14z"/><path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/></svg> Like</div>
+            <div class="post-action">Comment</div>
+            <div class="post-action">Repost</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Content: JOBS -->
+    <div id="tab-jobs" style="display:none">
+      <div class="section-card fade-in">
+        <div class="section-title">Jobs at AmpalOne</div>
+        <div style="text-align:center;padding:40px 20px;color:var(--li-muted)">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" style="margin-bottom:12px;opacity:.4"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+          <div style="font-size:16px;font-weight:600;color:var(--li-text);margin-bottom:8px">No open roles right now</div>
+          <div style="font-size:13px">Follow AmpalOne to be notified when new positions are posted.</div>
+          <button class="btn-follow" style="margin:16px auto 0;width:auto;padding:8px 24px" onclick="toggleFollow()">Follow for updates</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Content: PEOPLE -->
+    <div id="tab-people" style="display:none">
+      <div class="section-card fade-in">
+        <div class="section-title">People at AmpalOne</div>
+        <div class="people-grid">
+          <div class="people-card">
+            <div class="pcard-av" style="background:linear-gradient(135deg,#0a3060,#0a66c2)">AK</div>
+            <div class="pcard-name">Aarav Kumar</div>
+            <div class="pcard-role">Co-Founder &amp; CEO</div>
+            <button class="pcard-btn">Connect</button>
+          </div>
+          <div class="people-card">
+            <div class="pcard-av" style="background:linear-gradient(135deg,#064e3b,#059669)">PS</div>
+            <div class="pcard-name">Priya Sharma</div>
+            <div class="pcard-role">Head of Product</div>
+            <button class="pcard-btn">Connect</button>
+          </div>
+          <div class="people-card">
+            <div class="pcard-av" style="background:linear-gradient(135deg,#3b0764,#7c3aed)">RN</div>
+            <div class="pcard-name">Rohan Nair</div>
+            <div class="pcard-role">Lead Security Engineer</div>
+            <button class="pcard-btn">Connect</button>
+          </div>
+          <div class="people-card">
+            <div class="pcard-av" style="background:linear-gradient(135deg,#78350f,#d97706)">SA</div>
+            <div class="pcard-name">Sneha Agarwal</div>
+            <div class="pcard-role">AI Research Lead</div>
+            <button class="pcard-btn">Connect</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Sidebar -->
+  <aside class="sidebar-col">
+
+    <!-- Company Info -->
+    <div class="sidebar-card fade-in">
+      <div class="sidebar-title">Company info</div>
+      <div class="info-row">
+        <div class="info-item">
+          <svg class="info-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+          <div><div class="info-label">Website</div><div class="info-val"><a href="https://www.ampalone.com" target="_blank">www.ampalone.com</a></div></div>
+        </div>
+        <div class="info-item">
+          <svg class="info-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+          <div><div class="info-label">Industry</div><div class="info-val">Computer &amp; Network Security</div></div>
+        </div>
+        <div class="info-item">
+          <svg class="info-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <div><div class="info-label">Founded</div><div class="info-val">2025</div></div>
+        </div>
+        <div class="info-item">
+          <svg class="info-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div><div class="info-label">Location</div><div class="info-val">Global · Remote-First</div></div>
+        </div>
+        <div class="info-item">
+          <svg class="info-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <div><div class="info-label">Contact</div><div class="info-val"><a href="mailto:knowhow@ampalone.com">knowhow@ampalone.com</a></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Similar Pages -->
+    <div class="sidebar-card fade-in">
+      <div class="sidebar-title">Similar pages</div>
+      <div class="similar-item">
+        <div class="similar-logo" style="background:#0a66c2">Cd</div>
+        <div>
+          <div class="similar-name">CrowdStrike</div>
+          <div class="similar-tag">Computer &amp; Network Security</div>
+        </div>
+        <button class="follow-small">Follow</button>
+      </div>
+      <div class="similar-item">
+        <div class="similar-logo" style="background:#1e3a5f">Sg</div>
+        <div>
+          <div class="similar-name">SentinelOne</div>
+          <div class="similar-tag">Computer &amp; Network Security</div>
+        </div>
+        <button class="follow-small">Follow</button>
+      </div>
+      <div class="similar-item">
+        <div class="similar-logo" style="background:#4a154b">Cp</div>
+        <div>
+          <div class="similar-name">Cybereason</div>
+          <div class="similar-tag">Computer &amp; Network Security</div>
+        </div>
+        <button class="follow-small">Follow</button>
+      </div>
+      <div class="similar-item">
+        <div class="similar-logo" style="background:#1a1a2e">Wz</div>
+        <div>
+          <div class="similar-name">Wiz</div>
+          <div class="similar-tag">Cloud Security</div>
+        </div>
+        <button class="follow-small">Follow</button>
+      </div>
+    </div>
+
+    <!-- Ad / Promo -->
+    <div class="sidebar-card fade-in" style="background:linear-gradient(135deg,#f0f7ff,#e8f3ff);border:1px solid #cce0ff;">
+      <div style="font-size:13px;font-weight:700;color:#0a3060;margin-bottom:8px">📅 Book a Demo</div>
+      <div style="font-size:12px;color:#444;line-height:1.6;margin-bottom:12px">See AmpalOne Netrix, Orbit &amp; DocXsyn in action. Deploy in 6 minutes.</div>
+      <button onclick="window.open('https://www.ampalone.com','_blank')" style="width:100%;padding:8px;background:#0a66c2;color:#fff;border:none;border-radius:20px;font-weight:600;font-size:13px;cursor:pointer;font-family:var(--font);transition:background 0.15s" onmouseover="this.style.background='#004182'" onmouseout="this.style.background='#0a66c2'">Request Demo →</button>
+    </div>
+
+  </aside>
+</div>
+
+<!-- Footer -->
+<footer class="li-footer">
+  <div class="li-footer-logo">
+    <svg width="20" height="20" viewBox="0 0 34 34" fill="none">
+      <rect width="34" height="34" rx="4" fill="#0a66c2"/>
+      <text x="5" y="26" font-family="serif" font-size="22" font-weight="bold" fill="white">in</text>
+    </svg>
+    LinkedIn
+  </div>
+  <a href="#">About</a>
+  <a href="#">Accessibility</a>
+  <a href="#">Help Centre</a>
+  <a href="#">Privacy &amp; Terms</a>
+  <a href="#">Ad Choices</a>
+  <a href="#">Advertising</a>
+  <a href="#">Business Services</a>
+  <a href="#">Get the LinkedIn app</a>
+  <a href="#">More</a>
+  <div style="width:100%;margin-top:4px">LinkedIn Corporation © 2026 · <em>This is a UI mockup created from <a href="https://www.ampalone.com" target="_blank">ampalone.com</a></em></div>
+</footer>
+
+<script>
+  /* ── Follow toggle ── */
+  function toggleFollow() {
+    const btn = document.getElementById('follow-btn');
+    if (!btn) return;
+    if (btn.classList.contains('following')) {
+      btn.classList.remove('following');
+      btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg> Follow';
+    } else {
+      btn.classList.add('following');
+      btn.innerHTML = '✓ Following';
+    }
+  }
+
+  /* ── Tab switching ── */
+  const tabIds = ['home','about','posts','jobs','people'];
+
+  function switchTab(el, name) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    tabIds.forEach(id => {
+      const el2 = document.getElementById('tab-' + id);
+      if (el2) el2.style.display = (id === name) ? 'block' : 'none';
+    });
+  }
+
+  function switchTabByName(name) {
+    const tabs = document.querySelectorAll('.tab');
+    const names = tabIds;
+    tabs.forEach((t, i) => {
+      if (names[i] === name) { t.classList.add('active'); }
+      else { t.classList.remove('active'); }
+    });
+    tabIds.forEach(id => {
+      const el2 = document.getElementById('tab-' + id);
+      if (el2) el2.style.display = (id === name) ? 'block' : 'none';
+    });
+  }
+
+  /* ── Like button ── */
+  function likePost(el) {
+    const isLiked = el.style.color === 'rgb(10, 102, 194)';
+    el.style.color = isLiked ? '' : '#0a66c2';
+    el.querySelector('span') && (el.querySelector('span').textContent = isLiked ? 'Like' : 'Liked');
+    if (!el.querySelector('span')) el.childNodes.forEach(n => { if (n.nodeType === 3) n.textContent = isLiked ? ' Like' : ' Liked'; });
+  }
+
+  /* ── Connect buttons ── */
+  document.querySelectorAll('.pcard-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      this.textContent = this.textContent === 'Connect' ? '✓ Pending' : 'Connect';
+      this.style.background = this.textContent === '✓ Pending' ? '#e8f3ff' : '';
+    });
+  });
+
+  /* ── Follow small buttons ── */
+  document.querySelectorAll('.follow-small').forEach(btn => {
+    btn.addEventListener('click', function() {
+      this.textContent = this.textContent === 'Follow' ? '✓ Following' : 'Follow';
+    });
+  });
+</script>
+
+</body>
+</html>
